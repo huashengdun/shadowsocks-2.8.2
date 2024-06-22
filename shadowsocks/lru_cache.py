@@ -22,6 +22,11 @@ import collections
 import logging
 import time
 
+try:
+    from collections import MutableMapping
+except ImportError:
+    from collections.abc import MutableMapping
+
 
 # this LRUCache is optimized for concurrency, not QPS
 # n: concurrency, keys stored in the cache
@@ -31,7 +36,7 @@ import time
 #       as sweep() causes long pause
 
 
-class LRUCache(collections.MutableMapping):
+class LRUCache(MutableMapping):
     """This class is not thread safe"""
 
     def __init__(self, timeout=60, close_callback=None, *args, **kwargs):
